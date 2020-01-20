@@ -19,7 +19,10 @@
             android:inputType="textMultiLine"
             android:background="#fff"
             android:layout_gravity = "top"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
             android:ems = "10"
+            android:hint="Enter Note Title"
             android:gravity = "top"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -36,9 +39,11 @@
             android:layout_height = "match_parent"
             android:inputType="textMultiLine"
             android:background="#fff"
+            android:textColor="@color/colorPrimary"
             android:layout_gravity = "top"
             android:ems = "10"
             android:gravity = "top"
+            android:hint="Enter Note Text"
             />
     </com.google.android.material.textfield.TextInputLayout>
 </RelativeLayout>
