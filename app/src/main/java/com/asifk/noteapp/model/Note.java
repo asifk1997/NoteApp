@@ -14,6 +14,8 @@ public class Note {
     @ColumnInfo(name = "date")
     private long noteDate;
 
+    public Note() {
+    }
 
     public Note(String noteText, long noteDate) {
         this.noteText = noteText;

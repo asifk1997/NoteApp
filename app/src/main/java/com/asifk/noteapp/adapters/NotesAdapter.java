@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.asifk.noteapp.R;
+import com.asifk.noteapp.callbacks.NoteEventListener;
 import com.asifk.noteapp.model.Note;
 import com.asifk.noteapp.utils.NoteUtils;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> {
     private Context context;
     private ArrayList<Note> notes;
-
+    private NoteEventListener listener;
     public NotesAdapter(Context context, ArrayList<Note> notes) {
         this.context = context;
         this.notes = notes;
@@ -35,11 +36,28 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
-        Note note = getNote(position);
-        if (note !=null)
+        final Note note = getNote(position);
+        if (note != null)
         {
             holder.noteText.setText(note.getNoteText());
             holder.noteDate.setText(NoteUtils.dateFromLong(note.getNoteDate()));
+
+            // init note click event
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onNoteClick(note);
+                }
+            });
+
+            // init note long click event
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onNoteLongClick(note);
+                    return false;
+                }
+            });
         }
     }
 
@@ -61,5 +79,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
             noteDate  = itemView.findViewById(R.id.note_date);
             noteText  = itemView.findViewById(R.id.note_text);
         }
+    }
+
+    public void setListener(NoteEventListener listener)
+    {
+        this.listener=listener;
     }
 }

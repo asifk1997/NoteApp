@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -18,12 +19,28 @@ public class EditNotesActivity extends AppCompatActivity {
 
     private EditText inputNote;
     private NotesDao dao;
+    private Note temp;
+    public static final String NOTE_EXTRA_KEY = "note_id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_notes);
         inputNote = findViewById(R.id.input_note);
         dao = NotesDB.getInstance(this).notesDao();
+
+        if (getIntent().getExtras()!=null)
+        {
+            Log.d("AK","got extras");
+            int id= getIntent().getExtras().getInt(NOTE_EXTRA_KEY,0);
+            Log.d("AK","got extras id"+id);
+            temp = dao.getNoteById(id);
+
+            inputNote.setText(temp.getNoteText());
+        }
+        else
+        {
+            temp=new Note();
+        }
     }
 
 
@@ -48,8 +65,21 @@ public class EditNotesActivity extends AppCompatActivity {
         if (!text.isEmpty())
         {
             long date =new Date().getTime();
-            Note note = new Note(text,date); // Create new Note
-            dao.insertNote(note);
+           // Note note = new Note(text,date); // Create new Note
+
+            temp.setNoteDate(date);
+            temp.setNoteText(text);
+            Log.e("AK","tempid "+temp.getId());
+            if (temp.getId()== 0)
+            {
+                dao.insertNote(temp);
+
+            }
+            else{
+                dao.updateNote(temp);
+            }
+
+
 
             finish();
         }
