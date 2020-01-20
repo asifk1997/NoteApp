@@ -1,8 +1,11 @@
 package com.asifk.noteapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.asifk.noteapp.adapters.NotesAdapter;
+import com.asifk.noteapp.db.NotesDB;
+import com.asifk.noteapp.db.NotesDao;
 import com.asifk.noteapp.model.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,12 +21,14 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<Note> notes;
     private NotesAdapter adapter;
+    private NotesDao dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,27 +52,28 @@ public class MainActivity extends AppCompatActivity {
                 onAddNewNote();
             }
         });
+
+        dao = NotesDB.getInstance(this).notesDao();
     }
 
     private void loadNotes() {
 
         this.notes =new ArrayList<>();
-        for (int i=0;i<12;i++)
-        {
-            notes.add(new Note("This is demo for notepad... This is demo for notepad...This is demo for notepad...",new Date().getTime()));
-        }
-        adapter = new NotesAdapter(this,notes);
-        recyclerView.setAdapter(adapter);
+//        for (int i=0;i<12;i++)
+//        {
+//            notes.add(new Note("This is demo for notepad... This is demo for notepad...This is demo for notepad...",new Date().getTime()));
+//        }
+        List<Note> list = dao.getNotes();
+
+        this.notes.addAll(list);
+        this.adapter = new NotesAdapter(this,notes);
+        this.recyclerView.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
     }
 
     private void onAddNewNote() {
-        if (notes !=null)
-            notes.add(new Note("This is new note ",new Date().getTime()));
-        if (adapter!=null)
-        {
-            adapter.notifyDataSetChanged();
-        }
+       // todo start activity
+        startActivity(new Intent(this,EditNotesActivity.class));
     }
 
     @Override
