@@ -2,7 +2,7 @@
 An app that lets you take notes
 
 
-I made simple and easy to use app that lets you remember all the things which matter to you but can't keep everything in the head.
+Here is a simple and easy to use app that lets you remember all the things which matter to you but can't keep everything in the head.
 
 Here are some screenshots
 
