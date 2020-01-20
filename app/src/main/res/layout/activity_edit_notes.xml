@@ -8,7 +8,27 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp">
+
+
+
+        <EditText
+            android:id="@+id/input_title"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:inputType="textMultiLine"
+            android:background="#fff"
+            android:layout_gravity = "top"
+            android:ems = "10"
+            android:gravity = "top"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp">
+
+
 
         <EditText
             android:id="@+id/input_note"

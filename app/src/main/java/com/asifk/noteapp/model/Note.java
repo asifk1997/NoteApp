@@ -9,6 +9,8 @@ import androidx.room.PrimaryKey;
 public class Note {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "title")
+    private String noteTitle;
     @ColumnInfo(name = "text")
     private String noteText;
     @ColumnInfo(name = "date")
@@ -17,9 +19,10 @@ public class Note {
     public Note() {
     }
 
-    public Note(String noteText, long noteDate) {
+    public Note(String noteTitle,String noteText, long noteDate) {
         this.noteText = noteText;
         this.noteDate = noteDate;
+        this.noteTitle = noteTitle;
     }
 
     public String getNoteText() {
@@ -44,5 +47,13 @@ public class Note {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNoteTitle() {
+        return noteTitle;
+    }
+
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
     }
 }
